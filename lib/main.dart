@@ -48,14 +48,27 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          //set [No need to licen]
-          Provider.of<CounterProvider>(context ,listen: false).countValue=1;
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton:Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          FloatingActionButton(
+            onPressed: (){
+              //set [No need to licen]
+              Provider.of<CounterProvider>(context ,listen: false).decrementcountValue=1;
+            },
+            tooltip: 'Decrement',
+            child: const Icon(Icons.remove),
+          ),
+          FloatingActionButton(
+            onPressed: (){
+              //set [No need to licen]
+              Provider.of<CounterProvider>(context ,listen: false).incrementcountValue=1;
+            },
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+        ],
+      )
     );
   }
 }

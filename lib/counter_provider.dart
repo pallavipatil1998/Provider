@@ -15,10 +15,21 @@ class CounterProvider extends ChangeNotifier{
  }
 */
 
+
+ //using Setter & Getter func
+
 //setter func
-set countValue(int value){
+set incrementcountValue(int value){
   _count=_count+value;
   notifyListeners();
+}
+
+//setter
+set decrementcountValue(int value){
+  if(_count>0){
+    _count=_count-value;
+    notifyListeners();
+  }
 }
 
 //getter func
