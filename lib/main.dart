@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:state_1/counter_provider.dart';
+import 'package:state_1/second_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+      create:(context) => CounterProvider(),
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,10 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider(
-        create: (context) => CounterProvider(),
-        child: MyHomePage(),
-      )
+      home: MyHomePage()
     );
   }
 }
@@ -45,6 +46,10 @@ class MyHomePage extends StatelessWidget {
               '${Provider.of<CounterProvider>(context).getValue()}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder:(context) => SecondPage(),));
+            },
+                child:Text("Next Page"))
           ],
         ),
       ),
