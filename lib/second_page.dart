@@ -20,12 +20,13 @@ class SecondPage extends StatelessWidget {
               const Text(
                 'You have pushed the button this many times:',
               ),
-              Consumer(builder: (ctx,__,___){
+              Consumer<CounterProvider>(builder: (ctx,provider,___){
                 print("Consumer Build");
                 return Text(
                   //get [bedefault licen true]
                   // '${Provider.of<CounterProvider>(context).getValue()}',
-                  '${ctx.watch<CounterProvider>().getValue()}',
+                  // '${ctx.watch<CounterProvider>().getValue()}',
+                   '${provider.getValue()}',
                   style: Theme.of(context).textTheme.headlineMedium,
                 );
               })
