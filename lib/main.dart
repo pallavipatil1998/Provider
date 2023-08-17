@@ -42,7 +42,7 @@ class MyHomePage extends StatelessWidget {
             ),
             Text(
               //get [bedefault licen true]
-              '${Provider.of<CounterProvider>(context).CountValue}',
+              '${Provider.of<CounterProvider>(context).getValue()}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
@@ -54,7 +54,7 @@ class MyHomePage extends StatelessWidget {
           FloatingActionButton(
             onPressed: (){
               //set [No need to licen]
-              Provider.of<CounterProvider>(context ,listen: false).decrementcountValue=1;
+              Provider.of<CounterProvider>(context ,listen: false).decrement();
             },
             tooltip: 'Decrement',
             child: const Icon(Icons.remove),
@@ -62,7 +62,7 @@ class MyHomePage extends StatelessWidget {
           FloatingActionButton(
             onPressed: (){
               //set [No need to licen]
-              Provider.of<CounterProvider>(context ,listen: false).incrementcountValue=1;
+              Provider.of<CounterProvider>(context ,listen: false).increment();
             },
             tooltip: 'Increment',
             child: const Icon(Icons.add),
