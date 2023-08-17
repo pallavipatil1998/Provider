@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print('Home Page Build');
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -43,7 +45,9 @@ class MyHomePage extends StatelessWidget {
             ),
             Text(
               //get [bedefault licen true]
-              '${Provider.of<CounterProvider>(context).getValue()}',
+              // '${Provider.of<CounterProvider>(context).getValue()}',
+              //or
+              '${context.watch<CounterProvider>().getValue()}',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(onPressed: (){
@@ -59,7 +63,8 @@ class MyHomePage extends StatelessWidget {
           FloatingActionButton(
             onPressed: (){
               //set [No need to licen]
-              Provider.of<CounterProvider>(context ,listen: false).decrement();
+              // Provider.of<CounterProvider>(context ,listen: false).decrement();
+               context.read<CounterProvider>().decrement();
             },
             tooltip: 'Decrement',
             child: const Icon(Icons.remove),
@@ -67,7 +72,8 @@ class MyHomePage extends StatelessWidget {
           FloatingActionButton(
             onPressed: (){
               //set [No need to licen]
-              Provider.of<CounterProvider>(context ,listen: false).increment();
+              // Provider.of<CounterProvider>(context ,listen: false).increment();
+              context.read<CounterProvider>().increment();
             },
             tooltip: 'Increment',
             child: const Icon(Icons.add),

@@ -9,6 +9,7 @@ class SecondPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.purple.shade300,
           title: Text('Provider'),
         ),
         body: Center(
