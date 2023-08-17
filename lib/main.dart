@@ -43,13 +43,15 @@ class MyHomePage extends StatelessWidget {
             const Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              //get [bedefault licen true]
-              // '${Provider.of<CounterProvider>(context).getValue()}',
-              //or
-              '${context.watch<CounterProvider>().getValue()}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Consumer(builder: (_,__,___){
+              return Text(
+                //get [bedefault licen true]
+                // '${Provider.of<CounterProvider>(context).getValue()}',
+                //or
+                '${context.watch<CounterProvider>().getValue()}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              );
+            }),
             ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder:(context) => SecondPage(),));
             },

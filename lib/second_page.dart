@@ -7,6 +7,7 @@ class SecondPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Second Page Build');
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.purple.shade300,
@@ -19,11 +20,15 @@ class SecondPage extends StatelessWidget {
               const Text(
                 'You have pushed the button this many times:',
               ),
-              Text(
-                //get [bedefault licen true]
-                '${Provider.of<CounterProvider>(context).getValue()}',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
+              Consumer(builder: (ctx,__,___){
+                print("Consumer Build");
+                return Text(
+                  //get [bedefault licen true]
+                  // '${Provider.of<CounterProvider>(context).getValue()}',
+                  '${ctx.watch<CounterProvider>().getValue()}',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                );
+              })
             ],
           ),
         ),
