@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:state_1/second_page.dart';
 
 import 'Provider/counter_provider.dart';
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
+
+void main() {
+  runApp(ChangeNotifierProvider(
+    create:(context) => CounterProvider(),
+    child: MyApp(),
+  ));
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MyHomePage()
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Second Page Build');
+    print('Home Page Build');
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.purple.shade300,
           title: Text('Provider'),
         ),
         body: Center(
@@ -20,16 +44,24 @@ class SecondPage extends StatelessWidget {
               const Text(
                 'You have pushed the button this many times:',
               ),
+
+              //consumer use for only get value
               Consumer<CounterProvider>(builder: (_,provider,___){
-                print("Consumer Build");
+                print('Consumer build');
                 return Text(
                   //get [bedefault licen true]
                   // '${Provider.of<CounterProvider>(context).getValue()}',
+                  //or
                   // '${ctx.watch<CounterProvider>().getValue()}',
-                   '${provider.getValue()}',
+                  //or
+                  " ${provider.getValue()}",
                   style: Theme.of(context).textTheme.headlineMedium,
                 );
-              })
+              }),
+              ElevatedButton(onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder:(context) => SecondPage(),));
+              },
+                  child:Text("Next Page"))
             ],
           ),
         ),
@@ -39,7 +71,8 @@ class SecondPage extends StatelessWidget {
             FloatingActionButton(
               onPressed: (){
                 //set [No need to licen]
-                Provider.of<CounterProvider>(context ,listen: false).decrement();
+                // Provider.of<CounterProvider>(context ,listen: false).decrement();
+                context.read<CounterProvider>().decrement();
               },
               tooltip: 'Decrement',
               child: const Icon(Icons.remove),
@@ -47,13 +80,14 @@ class SecondPage extends StatelessWidget {
             FloatingActionButton(
               onPressed: (){
                 //set [No need to licen]
-                Provider.of<CounterProvider>(context ,listen: false).increment();
+                // Provider.of<CounterProvider>(context ,listen: false).increment();
+                context.read<CounterProvider>().increment();
               },
               tooltip: 'Increment',
               child: const Icon(Icons.add),
             ),
           ],
         )
-    );;
+    );
   }
 }

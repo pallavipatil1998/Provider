@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:state_1/counter_provider.dart';
+import 'package:state_1/Provider/list_provider.dart';
 import 'package:state_1/second_page.dart';
 
+import 'Provider/counter_provider.dart';
+
 void main() {
-  runApp(ChangeNotifierProvider(
-      create:(context) => CounterProvider(),
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CounterProvider(),),
+        ChangeNotifierProvider(create: (context) => ListDataProvider(),)
+      ],
     child: MyApp(),
-  ));
+  )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +22,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print('Home Page Build');
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -32,56 +37,44 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Home Page Build');
     return Scaffold(
       appBar: AppBar(
         title: Text('Provider'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Consumer(builder: (_,__,___){
-              return Text(
-                //get [bedefault licen true]
-                // '${Provider.of<CounterProvider>(context).getValue()}',
-                //or
-                '${context.watch<CounterProvider>().getValue()}',
-                style: Theme.of(context).textTheme.headlineMedium,
-              );
-            }),
-            ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder:(context) => SecondPage(),));
-            },
-                child:Text("Next Page"))
-          ],
-        ),
+      body: Consumer<ListDataProvider>(
+        builder: (_,provider,___){
+          List<Map<String,dynamic>> data=provider.getAllData();
+          return ListView.builder(
+          itemCount: data.length,
+          itemBuilder:(context,index){
+           return ListTile(
+              title: Text(data[index]['name']),
+             subtitle: Text(data[index]["dept"]),
+             trailing: IconButton(onPressed:(){
+               context.read<ListDataProvider>().deleteData(index);
+             },
+             icon: Icon(Icons.delete,color: Colors.red,)
+             ),
+             );
+           }
+           );
+          },
+
       ),
-      floatingActionButton:Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          FloatingActionButton(
-            onPressed: (){
-              //set [No need to licen]
-              // Provider.of<CounterProvider>(context ,listen: false).decrement();
-               context.read<CounterProvider>().decrement();
-            },
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),
-          ),
-          FloatingActionButton(
-            onPressed: (){
-              //set [No need to licen]
-              // Provider.of<CounterProvider>(context ,listen: false).increment();
-              context.read<CounterProvider>().increment();
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-        ],
-      )
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+        Map<String,dynamic> note={
+          "name": "pallavi",
+          "dept":"Flutter"
+        };
+        context.read<ListDataProvider>().addData(note);
+        },
+        child: Icon(Icons.add,color: Colors.white,),
+      ),
+
+
     );
   }
 }
